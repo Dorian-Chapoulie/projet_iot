@@ -6,8 +6,8 @@
 #include "EventManager.hpp"
 #include "Event.hpp"
 
-const String ssid = "Crisnice";
-const String password = "@Louise98etDorian06etCaline60M4Is%#n";
+const String ssid = "";
+const String password = "";
 
 
 TCPServer* server = TCPServer::getInstance();
