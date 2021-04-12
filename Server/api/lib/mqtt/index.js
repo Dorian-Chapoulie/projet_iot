@@ -27,15 +27,14 @@ const MQTT_init = () => {
 	client.on('message', (top, mess) => {
 		const topic = top.toString();
 		const data = JSON.parse(mess.toString());
-
 		switch(topic) {
 			case config.MQTT.subTopics[config.MQTT.subTopicId.DATA]:
 				robotService.addNewRobot({ ...data, isAvailable: true });
 				break;
 			case config.MQTT.subTopics[config.MQTT.subTopicId.AVAILABLE]:
-				const robot = robotService.findById(data.jupiterID);
+				let robot = robotService.findById(data.jupiterID);
 				if (robot) {
-					robot.isAvailable = data.isAvailable;
+					robotService.updateRobot(data);
 				} else {
 					robotService.addNewRobot(data);
 				}

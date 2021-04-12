@@ -1,7 +1,11 @@
-const fs = require('fs');
 const { Router } = require('express');
 const { addClient } = require('../../lib/tcp');
+const { uploadFirmware } = require('../../services/upload');
 const robotService = require('../../services/robot');
+const { getClientById } = require('../../lib/websocket');
+const { findById } = require('../../lib/tcp');
+const EspOTA = require('esp-ota');
+
 
 const router = Router();
 
@@ -19,6 +23,7 @@ router.post('/command', async (req, res) => {
             await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if (client.isAccepted) {
+                        robot.isAvailable = false;
                         resolve();
                     }else {
                         client.connection.destroy();
@@ -34,14 +39,41 @@ router.post('/command', async (req, res) => {
 
 });
 
-router.post('/firmware', async (req, res) => {
-    console.log(req);
-    fs.writeFile('helloworld.txt', 'Hello World!', function (err) {
-        if (err) return console.log(err);
-        console.log('Hello World > helloworld.txt');
-    });
-    res.send({});
+router.post('/firmware', uploadFirmware, (req, res, next) => {
+
+    if (req.fileValidationError) {
+        res.send({ error: true });
+    }
+
+    res.send({fileName: req.file.filename});
 });
 
+router.post('/flash', async (req, res) => {
+    const { socketId, fileName } = req.body;
+    const socket = getClientById(socketId).socket;
+    const tcpClient = findById(socketId);
+
+    if (!socket || !tcpClient) {
+        res.send({error: 'client not found'});
+        return;
+    }
+
+    const esp = new EspOTA();
+
+    esp.setPassword('2a6d8ad0-9Ef;!&');
+    esp.on('state', (state) => {
+        socket.emit('ota_state', { state });
+    });
+    esp.on('progress', (current, total) => {
+        socket.emit('ota_progress', { value: Math.round(current / total * 100) });
+    });
+    esp.uploadFile(`./uploads/${fileName}`, tcpClient.robot.ip, 3232, EspOTA.FLASH)
+        .then(() => {
+            res.send({});
+        })
+        .catch((error) => {
+            res.send({error});
+        });
+});
 
 module.exports = router;

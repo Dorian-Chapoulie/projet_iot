@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+
 const { MQTT_init } = require('./lib/mqtt');
 const { initSocketProvider } = require('./lib/websocket');
 const { config } = require('./config/index');
@@ -19,11 +20,11 @@ initSocketProvider(io);
 
 const robot = require('./routes/robot');
 
-
 const port = process.env.PORT || 3001;
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
 
 app.use('/robot', robot);
 

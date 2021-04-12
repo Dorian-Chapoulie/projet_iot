@@ -1,5 +1,5 @@
 const net = require('net');
-const clients = [];
+let clients = [];
 
 const addClient = (ip, port, socketID, robotID) => {
 	const client = new net.Socket();
@@ -32,6 +32,10 @@ const addClient = (ip, port, socketID, robotID) => {
 
 	client.on('close', () => {
 		console.log('[TCP] Connection closed');
+	});
+
+	client.on('error',function(error){
+		console.log('Error : ');
 	});
 
 	return findById(socketID);
