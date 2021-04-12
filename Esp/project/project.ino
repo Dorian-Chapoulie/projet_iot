@@ -1,4 +1,5 @@
 #include <PubSubClient.h>
+#include <ArduinoOTA.h>
 #include "TCPServer.hpp"
 #include "Motor.hpp"
 #include "Servo.hpp"
@@ -26,6 +27,7 @@ int enable1Pin = 14;
 
 void setup() {
   Serial.begin(9600);
+  WiFi.mode(WIFI_STA);
   
   TCPServer::init(25565, ssid, password);
   MQTTClient::init(ssid, password);
@@ -62,9 +64,13 @@ void setup() {
   eventManager->setEventListener("stop", [](EventCallbackData& d){
     motor->stop();
   });
+
+  ArduinoOTA.setPassword("2a6d8ad0-9Ef;!&");
+  ArduinoOTA.begin();
 }
 
 void loop() {
   mqttClient->loop();
+  ArduinoOTA.handle();
   delay(1000);
 }
