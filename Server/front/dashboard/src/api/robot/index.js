@@ -10,3 +10,5 @@ export const askCommand = async (jupiterID, socketID) => (axios.post(`${API_URL}
 }));
 
 export const uploadFirmware = async (formData) => axios.post(`${API_URL}${ROBOT_PATH}/firmware`, formData);
+
+export const flashOTAFirmware = async (socketId, fileName) => axios.post(`${API_URL}${ROBOT_PATH}/flash`, { socketId, fileName });

@@ -1,14 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import uuid from 'react-uuid'
+import React, { useEffect, useState } from 'react';
 import {
   makeStyles,
-  Button,
   Container,
 } from '@material-ui/core'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { initInputsEvent } from '../lib/Input';
+import { initInputsEvent, offInitInputsEvent } from '../lib/Input';
 import { useSockets } from '../api/websockets';
-import { uploadFirmware } from '../api/robot';
+import RobotUploadFirmware from '../components/upload';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -17,9 +14,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-const App = () => {
-    const { sendInstruction } = useSockets();
+const RobotControl = () => {
+    const { sendInstruction, sendDisconectRobot } = useSockets();
     const classes = useStyles();
     const [defaultValues, setDefaultValues] = useState({
         speed: 200, // [0, 255]
@@ -30,7 +26,11 @@ const App = () => {
 
     useEffect(() => {
         initInputsEvent(handleKeyPressed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        return () => {
+            sendDisconectRobot();
+            offInitInputsEvent();
+        }
     }, []);
 
     useEffect(() => {
@@ -81,41 +81,14 @@ const App = () => {
     };
 
 
-    const onFileUpload = (e) => { 
-        if (e.target.files[0] !== undefined) {
-            const formData = new FormData(); 
-            const file = e.target.files[0];
-            formData.append( 
-                uuid(), 
-                file, 
-                file.name,
-            ); 
-            console.log(file);
-            uploadFirmware(formData);
-        }  
-    }; 
-
     return (
         <>
         <h1> Control </h1>
         <Container className="App">
-            <p>test</p>
-
-            
-            <Button
-                variant="contained"
-                color="default"
-                className={classes.button}
-                startIcon={<CloudUploadIcon />}
-                onChange={onFileUpload}
-                component="label"
-            >
-                Upload
-                <input type="file" hidden />
-            </Button>
+            <RobotUploadFirmware />
         </Container> 
         </>
     );
 }
-//onChange={(e) => setFile(e.target.files[0])}
-export default App;
+
+export default RobotControl;

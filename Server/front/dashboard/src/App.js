@@ -25,6 +25,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import { fetchList, askCommand } from './api/robot';
 import { useSockets } from './api/websockets';
+import RobotUploadFirmware from './components/upload';
+
 import './App.css';
 
 const useRowStyles = makeStyles({

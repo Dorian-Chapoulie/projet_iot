@@ -28,24 +28,34 @@ export const pressedKeys = [
         value: 'Control',
     },
 ];
+let callback = undefined;
 
-export const initInputsEvent = (callback) => {   
+const onKeyDown = (e) => {
+    pressedKeys.forEach(key => {
+        if(e.key === key.value && !key.state) {
+            key.state = true;
+            if (callback) callback(key)
+        }
+    });  
+}
 
-    document.addEventListener('keydown', e => {
-        pressedKeys.forEach(key => {
-            if(e.key === key.value && !key.state) {
-                key.state = true;
-                callback(key)
-            }
-        });          
-    });
+const onKeyUp = (e) => {
+    pressedKeys.forEach(key => {
+        if(e.key === key.value && key.state) {
+            key.state = false;
+            callback(key);
+        }
+    });   
+}
 
-    document.addEventListener('keyup', e => {
-        pressedKeys.forEach(key => {
-            if(e.key === key.value && key.state) {
-                key.state = false;
-                callback(key);
-            }
-        });                  
-    });
+export const initInputsEvent = (cb) => {   
+    callback = cb;
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+}
+
+export const offInitInputsEvent = () => {
+    document.removeEventListener('keydown', onKeyDown);
+    document.removeEventListener('keyup', onKeyUp);
 }

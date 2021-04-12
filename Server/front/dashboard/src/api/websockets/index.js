@@ -30,15 +30,22 @@ export const WSocketsProvider = ({ children }) => {
 	}, [])
 
 	const sendInstruction = useCallback((key) => {
-		socket.emit('instruction', key);
+		socket?.emit('instruction', key);
 	}, [socket]);
+
+	const sendDisconectRobot = useCallback(() => {
+		socket?.emit('robot_disconnect', {});
+	}, [socket]);
+
 
 	const value = useMemo(() => ({
 		socket,
 		sendInstruction,
+		sendDisconectRobot,
 	}), [
 		socket,
 		sendInstruction,
+		sendDisconectRobot,
 	]);
 
 	return (
