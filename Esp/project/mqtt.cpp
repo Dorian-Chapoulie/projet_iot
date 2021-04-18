@@ -25,7 +25,6 @@ void MQTTClient::mqttInit(const String& ssid, const String& passwd) {
   WiFi.begin(ssid.c_str(), passwd.c_str());
   while(WiFi.status() != WL_CONNECTED){
     delay(1000);
-    Serial.print(".");
   }
   m_mqttClient->setServer(m_mqttBroker, m_mqttPort);
   m_mqttClient->setCallback(MQTTClient::mqttMessageHandler);
@@ -59,11 +58,6 @@ void MQTTClient::mqttMessageHandler(char* topic, byte* message, unsigned int len
   for(int i = 0 ; i < length ; i++) {
     messageTemp += (char) message[i];
   }
-  
-  Serial.print("Message : ");
-  Serial.println(messageTemp);
-  Serial.print("arrived on topic : ");
-  Serial.println(topic) ;
 
   if (String(topic) == MQTTClient::getInstance()->m_subTopics[0]) {
     EventCallbackData data;
@@ -77,9 +71,7 @@ void MQTTClient::mqttSubscrible(const char* topic) {
   while(!m_mqttClient->connected()) { 
     if(m_mqttClient->connect(WiFi.macAddress().c_str())) {
       m_mqttClient->subscribe(topic);
-      Serial.println(topic);
     } else {
-      Serial.println("try again in 5 seconds");
       delay(5*1000);
     }
   }

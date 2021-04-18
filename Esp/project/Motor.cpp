@@ -20,17 +20,14 @@ void Motor::init(const byte enablePin) {
 }
 
 void Motor::forward() {
-  Serial.println("Moving Forward");
   digitalWrite(m_motor1Pin1, LOW);
   digitalWrite(m_motor1Pin2, HIGH);
 }
 void Motor::backward(){
-  Serial.println("Moving Backward");
   digitalWrite(m_motor1Pin1, HIGH);
   digitalWrite(m_motor1Pin2, LOW);
 }
 void Motor::stop() {
-  Serial.println("Motor stopped");
   digitalWrite(m_motor1Pin1, LOW);
   digitalWrite(m_motor1Pin2, LOW);
 }

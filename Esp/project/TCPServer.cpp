@@ -8,16 +8,11 @@ TCPServer::TCPServer(unsigned int port, const String& ssid, const String& passwd
     m_port = port;
     server = new WiFiServer(port);
     
-    Serial.print("Connecting to ");
-    Serial.println(ssid);
     WiFi.begin(ssid.c_str(), passwd.c_str());
     
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
-      Serial.print(".");
     }
-    Serial.println("WiFi connected.");
-    Serial.println(WiFi.localIP());
     server->begin();
 
     xTaskCreatePinnedToCore(
@@ -52,8 +47,11 @@ void TCPServer::loop(void* params) {
     if (client) {
       currentTime = millis();
       previousTime = currentTime;
-      Serial.println("New Client.");
       client.write(WiFi.macAddress().c_str());
+
+      if (!_this->isAvailable){
+        client.stop();
+      }
 
       _this->isAvailable = false;
       EventCallbackData data;
@@ -62,15 +60,12 @@ void TCPServer::loop(void* params) {
       
       String currentLine = "";
       
-      while (client.connected() && currentTime - previousTime <= _this->m_timeout) {
+      while (client.connected() /*&& currentTime - previousTime <= _this->m_timeout*/) {
         currentTime = millis();
         if (client.available()) {
           char c = client.read();
-          if (c == ';') {
-            Serial.println(currentLine);
-            
-            _this->eventManager->checkEvent(currentLine);
-            
+          if (c == ';') {         
+            _this->eventManager->checkEvent(currentLine);    
             currentLine = "";
           } else {
             currentLine += c;
@@ -78,13 +73,11 @@ void TCPServer::loop(void* params) {
           
         }
       }
-     
+
       client.stop();
       _this->isAvailable = true;
       data.iValue = 1;
       EventManager::getInstance()->trigerEvent("isavailable", data);
-      Serial.println("Client disconnected.");
-      Serial.println("");
     }
   }
 }

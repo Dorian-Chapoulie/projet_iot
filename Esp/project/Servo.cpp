@@ -13,8 +13,6 @@ ServoHandler::~ServoHandler() {
 }
 
 void ServoHandler::rotate(byte position) {
-  Serial.print("Servo rotate: ");
-  Serial.println(position);
   servo.write(position);
 }
 
