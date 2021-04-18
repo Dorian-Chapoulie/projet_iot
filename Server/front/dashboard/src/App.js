@@ -70,7 +70,7 @@ function Row({ robot, handleClickControl, isLoading }) {
                 </TableHead>
                 <TableBody>
                   {robot.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                    <TableRow key={historyRow.ip}>
                       <TableCell component="th" scope="row">
                       {historyRow.ip}
                       </TableCell>
@@ -140,7 +140,6 @@ const App = () => {
   const handleClickControl = async (jupiterID) => {
     setIsLoading(true);
     const { data } = await askCommand(jupiterID, socket.id);
-    console.log("ok", data)
     if (data.error) { 
       robots.find((robot) => robot.name === jupiterID).error = true;
       setIsLoading(false);

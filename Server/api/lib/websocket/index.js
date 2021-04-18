@@ -15,21 +15,23 @@ exports.initSocketProvider = (socketIO) => {
         clients.push({ socket, id: socket.id });
 
         socket.on("robot_disconnect", () => {
-            console.log("deco robot");
             const client = findById(socket.id);
             if (!client) return;
             client.connection.destroy();
-            
         });
 
         socket.on("disconnect", () => {
-            console.log("deco");
+            const client = findById(socket.id);
+            if (client) client.connection.destroy();
             clients = clients.filter((sock) => sock !== socket);
         });
 
         socket.on("instruction", (key) => {
             const client = findById(socket.id);
-            if (!client) return;
+            if (!client) { 
+                socket.emit('robot_not_connected');
+                return;
+            }
             switch(key.toLowerCase()) {
                 case 'z': 
                     client.sendMessage(config.TCP.PROTOCOL.MOTOR.DIRECTION.FORWARD);
@@ -61,6 +63,8 @@ exports.initSocketProvider = (socketIO) => {
     });
 };
 
-exports.getClientById = (id) => {
+const getClientById = (id) => {
     return clients.find((sock) => sock.id === id);
-}
+};
+
+module.exports.getClientById = getClientById;

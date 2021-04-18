@@ -15,11 +15,31 @@ router.get('/list', (req, res) => {
 
 router.post('/command', async (req, res) => {
     const { jupiterID, socketID } = req.body;
-    const robot = robotService.findById(jupiterID);
+    let robot = undefined;
+    
+    try {
+        await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                if (robot) resolve(robot);
+                else reject({ error: true });
+            }, 10000);
+            setInterval(() => {
+                robot = robotService.findById(jupiterID);
+                if (robot) { 
+                    clearTimeout(timeout);
+                    resolve(robot);
+                }
+            }, 100);
+        });
+    }catch(err) {
+        res.send({error: true });
+        return;
+    }
 
-    if (robot) {
+    const socket = getClientById(socketID).socket;
+    if (robot && socket) {
         try {
-            const client = addClient(robot.ip, robot.port, socketID, jupiterID);
+            const client = addClient(robot.ip, robot.port, socket, jupiterID, socketID);
             await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if (client.isAccepted) {
@@ -35,8 +55,9 @@ router.post('/command', async (req, res) => {
         } catch (err) {
             res.send({error: true });
         }
+    } else {
+        res.send({error: true });
     }
-
 });
 
 router.post('/firmware', uploadFirmware, (req, res, next) => {
@@ -54,7 +75,7 @@ router.post('/flash', async (req, res) => {
     const tcpClient = findById(socketId);
 
     if (!socket || !tcpClient) {
-        res.send({error: 'client not found'});
+        res.status(500).send({error: 'client not found'});
         return;
     }
 

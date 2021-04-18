@@ -22,6 +22,10 @@ const MQTT_init = () => {
 		setInterval(() => {
 			sendMessage(config.MQTT.pubTopics.ROBOT_IS_AVAILABLE, {});
 		}, 5000);
+
+		setInterval(() => {
+			robotService.clearList();
+		}, 10000);
 	});
 
 	client.on('message', (top, mess) => {

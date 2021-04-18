@@ -1,7 +1,8 @@
 const net = require('net');
+
 let clients = [];
 
-const addClient = (ip, port, socketID, robotID) => {
+const addClient = (ip, port, socket, robotID, socketID) => {
 	const client = new net.Socket();
 
 	clients.push({
@@ -14,13 +15,16 @@ const addClient = (ip, port, socketID, robotID) => {
 		isAccepted: false,
 		sendMessage: (message) => {
 			client.write(`${message};`);
-		}
+		},
+		socket,
 	});
+
+	setInterval(() => {
+		client.write(';');
+	}, 1000);
 	
 	client.connect(port, ip, () => {
 		console.log('[TCP] Connected');
-		//client.write('Hello, server! Love, Client;');
-		//client.destroy();
 	});
 
 	client.on('data', (data) => {
@@ -31,11 +35,15 @@ const addClient = (ip, port, socketID, robotID) => {
 	});
 
 	client.on('close', () => {
+		client.destroy();
+		clients = clients.filter((c) => c.id !== socketID);
 		console.log('[TCP] Connection closed');
 	});
 
-	client.on('error',function(error){
-		console.log('Error : ');
+	client.on('error', (error) => {
+		socket.emit('robot_disconnected', { error });
+		client.destroy();
+		clients = clients.filter((c) => c.id !== socketID);
 	});
 
 	return findById(socketID);

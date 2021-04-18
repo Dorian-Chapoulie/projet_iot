@@ -28,3 +28,7 @@ exports.updateRobot = (data) => {
         battery: data.battery,
     });
 }
+
+exports.clearList = () => {
+    //robots = [];
+}
