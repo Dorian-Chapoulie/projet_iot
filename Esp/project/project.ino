@@ -15,11 +15,15 @@ TCPServer* server = TCPServer::getInstance();
 
 Motor* motor = nullptr;
 ServoHandler* servo = nullptr;
+ServoHandler* servoCamHonrizon = nullptr;
+ServoHandler* servoCamVertical = nullptr;
 MQTTClient* mqttClient = nullptr;
 EventManager* eventManager = nullptr;
 
 
 int servoPin = 22;
+int servoCamHonrizonPin = 21;
+int servoCamVerticalPin = 19;
 int motor1Pin1 = 33;
 int motor1Pin2 = 32;
 int enable1Pin = 14;
@@ -37,6 +41,8 @@ void setup() {
 
   motor = new Motor(motor1Pin1, motor1Pin2, enable1Pin);
   servo = new ServoHandler(servoPin);
+  servoCamHonrizon = new ServoHandler(servoCamHonrizonPin);
+  servoCamVertical = new ServoHandler(servoCamVerticalPin);
 
   /* ------- SENS ------*/
   eventManager->setEventListener("turn_r", [](EventCallbackData& d){
@@ -64,7 +70,23 @@ void setup() {
   eventManager->setEventListener("stop", [](EventCallbackData& d){
     motor->stop();
   });
-
+  
+  /* ------- CAM HONRIZONTAL ------*/
+  eventManager->setEventListener("turn_cam_r", [](EventCallbackData& d){
+    servoCamHonrizon->turnRight();
+  });
+  eventManager->setEventListener("turn_cam_d", [](EventCallbackData& d){
+    servoCamHonrizon->turnLeft();
+  });
+  
+  /* ------- CAM VERTICAL ------*/
+  eventManager->setEventListener("turn_cam_u", [](EventCallbackData& d){
+    servoCamVertical->turnRight();
+  });
+  eventManager->setEventListener("turn_cam_b", [](EventCallbackData& d){
+    servoCamVertical->turnLeft();
+  });
+  
   ArduinoOTA.setPassword("2a6d8ad0-9Ef;!&");
   ArduinoOTA.begin();
 }

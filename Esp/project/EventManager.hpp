@@ -15,7 +15,7 @@ public:
 
 private:
     static EventManager* instance;
-    const int EVENT_NUMBER = 8;
+    const int EVENT_NUMBER = 12;
 
     EventManager();
     ~EventManager();

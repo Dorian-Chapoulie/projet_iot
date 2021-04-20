@@ -13,7 +13,7 @@ public:
 private:
     const unsigned int m_freq = 30000;
     const unsigned int m_resolution = 8;
-    const unsigned int m_pwmChannel = 1;
+    static unsigned int m_pwmChannel;
     const byte m_turnStep = 10;
 
     byte m_position = 90;

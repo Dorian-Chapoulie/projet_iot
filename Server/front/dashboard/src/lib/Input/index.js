@@ -27,6 +27,22 @@ export const pressedKeys = [
         state: false,
         value: 'Control',
     },
+    {
+        state: false,
+        value: 'ArrowUp',
+    },
+    {
+        state: false,
+        value: 'ArrowDown',
+    },
+    {
+        state: false,
+        value: 'ArrowLeft',
+    },
+    {
+        state: false,
+        value: 'ArrowRight',
+    },
 ];
 let callback = undefined;
 

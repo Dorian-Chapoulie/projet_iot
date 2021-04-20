@@ -54,6 +54,18 @@ exports.initSocketProvider = (socketIO) => {
                 case 'control':
                     client.sendMessage(config.TCP.PROTOCOL.MOTOR.SPEED.DECREASE);
                 break;
+                case 'arrowup':
+                    client.sendMessage(config.TCP.PROTOCOL.CAM.UP);
+                break;
+                case 'arrowdown':
+                    client.sendMessage(config.TCP.PROTOCOL.CAM.DOWN);
+                break;
+                case 'arrowleft':
+                    client.sendMessage(config.TCP.PROTOCOL.CAM.LEFT);
+                break;
+                case 'arrowright':
+                    client.sendMessage(config.TCP.PROTOCOL.CAM.RIGHT);
+                break;
             }
 
             //io.sockets.in(game.id).emit('playerposition', { id, x, y, direction });

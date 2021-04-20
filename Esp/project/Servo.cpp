@@ -1,11 +1,12 @@
  #include "Servo.hpp"
- 
+
+unsigned int ServoHandler::m_pwmChannel = 1;
 ServoHandler::ServoHandler(const byte pin) {
   pinMode(pin, OUTPUT);
-  ledcSetup(m_pwmChannel, m_freq, m_resolution);
+  ledcSetup(m_pwmChannel++, m_freq, m_resolution);
   ledcAttachPin(pin, m_pwmChannel);
   servo.attach(pin);
-  rotate(m_position);
+  //rotate(m_position);
 }
 
 ServoHandler::~ServoHandler() {

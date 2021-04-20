@@ -15,6 +15,10 @@ const RobotControl = () => {
     });
     const [intervalD, setIntervalD] = useState(false);
     const [intervalQ, setIntervalQ] = useState(false);
+    const [intervalCL, setIntervalCL] = useState(false);
+    const [intervalCR, setIntervalCR] = useState(false);
+    const [intervalCU, setIntervalCU] = useState(false);
+    const [intervalCD, setIntervalCD] = useState(false);
     const [showModalDisconnected, setShowModalDisconnected] = useState(false);
     const [showModalNotConnected, setShowModalNotConnected] = useState(false);
 
@@ -54,10 +58,46 @@ const RobotControl = () => {
         }
     }, [intervalQ, sendInstruction]);
 
+    useEffect(() => {
+        if (intervalCL) {
+            const interval = setInterval(() => {
+                sendInstruction('arrowleft');
+            }, 100);
+            return () => clearInterval(interval);
+        }
+    }, [intervalCL, sendInstruction]);
+
+    useEffect(() => {
+        if (intervalCR) {
+            const interval = setInterval(() => {
+                sendInstruction('arrowright');
+            }, 100);
+            return () => clearInterval(interval);
+        }
+    }, [intervalCR, sendInstruction]);
+
+    useEffect(() => {
+        if (intervalCU) {
+            const interval = setInterval(() => {
+                sendInstruction('arrowup');
+            }, 100);
+            return () => clearInterval(interval);
+        }
+    }, [intervalCU, sendInstruction]);
+
+    useEffect(() => {
+        if (intervalCD) {
+            const interval = setInterval(() => {
+                sendInstruction('arrowdown');
+            }, 100);
+            return () => clearInterval(interval);
+        }
+    }, [intervalCD, sendInstruction]);
+
     const handleKeyPressed = (key) => {
         if(key.value === 'd') {
             if (key.state) {
-                sendInstruction('d');
+                sendInstruction(key.value);
                 setIntervalD(true);
                 setIntervalQ(false);
             } else {
@@ -65,13 +105,49 @@ const RobotControl = () => {
             }
         } else if(key.value === 'q') {
             if (key.state) {
-                sendInstruction('q');
+                sendInstruction(key.value);
                 setIntervalQ(true);
                 setIntervalD(false);
             } else {
                 setIntervalQ(false);
             }
-        } else if (key.value === 'z' || key.value === 's') {
+        } else if(key.value === 'ArrowUp') {
+            if (key.state) {
+                sendInstruction(key.value);
+                setIntervalCU(true);
+                setIntervalCD(false);
+            } else {
+                setIntervalCU(false);
+            }
+        } 
+        else if(key.value === 'ArrowDown') {
+            if (key.state) {
+                sendInstruction(key.value);
+                setIntervalCD(true);
+                setIntervalCU(false);
+            } else {
+                setIntervalCD(false);
+            }
+        } 
+        else if(key.value === 'ArrowLeft') {
+            if (key.state) {
+                sendInstruction(key.value);
+                setIntervalCL(true);
+                setIntervalCR(false);
+            } else {
+                setIntervalCL(false);
+            }
+        } 
+        else if(key.value === 'ArrowRight') {
+            if (key.state) {
+                sendInstruction(key.value);
+                setIntervalCR(true);
+                setIntervalCL(false);
+            } else {
+                setIntervalCR(false);
+            }
+        } 
+        else if (key.value === 'z' || key.value === 's') {
             if (key.state) {
                 sendInstruction(key.value);
             }else {

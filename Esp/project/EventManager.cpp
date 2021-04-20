@@ -43,6 +43,15 @@ void EventManager::checkEvent(String& protocol) const {
       }
     break;
     case 'C':
+     if(protocol[4] == 'R') { // I-C-R
+        trigerEvent("turn_cam_r", EventCallbackData());
+      } else if(protocol[4] == 'D') { // I-C-D
+        trigerEvent("turn_cam_d", EventCallbackData());
+      } else if(protocol[4] == 'U') { // I-C-U
+        trigerEvent("turn_cam_u", EventCallbackData());
+      }else if(protocol[4] == 'B') { /// I-C-B
+        trigerEvent("turn_cam_b", EventCallbackData());
+      }
     break;
   }
                 
