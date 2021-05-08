@@ -27,6 +27,9 @@ import { fetchList, askCommand } from './api/robot';
 import { useSockets } from './api/websockets';
 import RobotUploadFirmware from './components/upload';
 
+import RefreshIcon from '@material-ui/icons/Refresh';
+import ControlCameraIcon from '@material-ui/icons/ControlCamera';
+
 import './App.css';
 
 const useRowStyles = makeStyles({
@@ -87,7 +90,7 @@ function Row({ robot, handleClickControl, isLoading }) {
                 color="info"
                 onClick={() => handleClickControl(robot.name)}
               >
-                {isLoading ? <CircularProgress /> : 'Controler'}
+                {isLoading ? <CircularProgress /> : <ControlCameraIcon/>}
               </Button>
               {robot.error && <Alert severity="warning">Le robot n'est plus disponible.</Alert>}
             </Box>
@@ -148,9 +151,10 @@ const App = () => {
     }
   }
 
+
   return (
     <>
-      <h1> Liste des robots </h1>
+      <h1 className="text-center"> Liste des robots </h1>
       <Container className="App">
         {isRefreshLoading && <LinearProgress />}
         <TableContainer component={Paper}>
@@ -180,7 +184,7 @@ const App = () => {
           color="info"
           onClick={handleRefresh}
         >
-          {isRefreshLoading ? <CircularProgress /> : 'Rafraichir'}
+          {isRefreshLoading ? <CircularProgress /> :<RefreshIcon/> }
         </Button>
       </Container> 
     </>
