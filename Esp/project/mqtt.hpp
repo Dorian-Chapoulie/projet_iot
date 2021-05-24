@@ -12,13 +12,13 @@ public:
     ~MQTTClient();
 
     void loop() const;
+    String camIp = "";
   
 private:
     MQTTClient(const String& ssid, const String& passwd);
     void mqttInit(const String& ssid, const String& passwd);
     void mqttSubscrible(const char* topic);
-    void mqttSendData(const char* message);
-
+   
     static void mqttMessageHandler(char* topic, byte* message, unsigned int length);
     static MQTTClient* instance;
     

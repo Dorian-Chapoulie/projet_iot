@@ -19,7 +19,7 @@ private:
     const unsigned int m_resolution = 8;
     const byte m_speedStep = 10;
 
-    byte m_speed = 200;
+    byte m_speed = 255;
     byte m_motor1Pin1;
     byte m_motor1Pin2;
 };

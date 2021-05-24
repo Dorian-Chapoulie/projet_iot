@@ -6,6 +6,8 @@
 #include "mqtt.hpp"
 #include "EventManager.hpp"
 #include "Event.hpp"
+#define RXD2 16
+#define TXD2 17
 
 const String ssid = "";
 const String password = "";
@@ -32,6 +34,7 @@ int enable1Pin = 14;
 void setup() {
   Serial.begin(9600);
   WiFi.mode(WIFI_STA);
+  Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
   
   TCPServer::init(25565, ssid, password);
   MQTTClient::init(ssid, password);
@@ -91,8 +94,13 @@ void setup() {
   ArduinoOTA.begin();
 }
 
+String command;
 void loop() {
   mqttClient->loop();
   ArduinoOTA.handle();
+   while (Serial2.available() /*&& mqttClient->camIp.length() <= 0*/) {
+    command = Serial2.readStringUntil('\n');
+    mqttClient->camIp = command.substring(0, command.length() - 1);
+  }
   delay(1000);
 }

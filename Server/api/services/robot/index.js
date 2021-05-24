@@ -6,14 +6,14 @@ exports.findById = (id) => {
     return robots.find((r) => r.jupiterID === id);
 }
 
-exports.addNewRobot = ({ jupiterID, firmware, isAvailable, ip, port, battery }) => {
+exports.addNewRobot = ({ jupiterID, firmware, isAvailable, ip, port, cameraIp }) => {
     robots.push({
         jupiterID,
         firmware,
         isAvailable,
         ip,
         port,
-        battery,
+        cameraIp,
     });
 }
 
@@ -25,7 +25,7 @@ exports.updateRobot = (data) => {
         isAvailable: data.isAvailable === 'true' ? true : false,
         ip: data.ip,
         port: data.port,
-        battery: data.battery,
+        cameraIp: data.cameraIp,
     });
 }
 

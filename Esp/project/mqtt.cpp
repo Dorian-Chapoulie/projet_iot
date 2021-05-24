@@ -45,7 +45,7 @@ void MQTTClient::mqttInit(const String& ssid, const String& passwd) {
     payload += WiFi.localIP().toString();
     payload += "\", \"port\": \"";
     payload += TCPServer::getInstance()->getPort();
-    payload += "\", \"battery\": \"5.123\"  }";
+    payload += "\", \"cameraIp\": \"" + MQTTClient::getInstance()->camIp + "\" }";
     char data[payload.length() + 1];
     payload.toCharArray(data, (payload.length() + 1));
     MQTTClient::getInstance()->m_mqttClient->publish(MQTTClient::getInstance()->m_pubTopics[1], data);
@@ -79,16 +79,4 @@ void MQTTClient::mqttSubscrible(const char* topic) {
 
 void MQTTClient::loop() const {
   m_mqttClient->loop(); 
-}
-
-void MQTTClient::mqttSendData(const char* message) {
-  /*payload = "{\"who\": \"";
-  payload += whoami;   
-  payload += "\", \"value\": " ;
-  payload += "13"; 
-  payload += "}";
-  payload.toCharArray(data, (payload.length() + 1)); // Convert String payload to a char array
-
-  //Serial.println(data);
-  client.publish(TOPIC_PUB, data); */
 }

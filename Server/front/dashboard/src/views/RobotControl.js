@@ -7,9 +7,13 @@ import {
   ModalFooter,
   Card,
   CardHeader,
+  CardBody,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { Container } from "@material-ui/core";
+import Iframe from 'react-iframe'
+import GaugeChart from 'react-gauge-chart'
+
 import { initInputsEvent, offInitInputsEvent } from "../lib/Input";
 import { useSockets } from "../api/websockets";
 import RobotUploadFirmware from "../components/upload";
@@ -17,12 +21,16 @@ import RobotUploadFirmware from "../components/upload";
 import { ReturnButton } from "../components/returnButton";
 import PopOverContainer from "../components/popOver/popOverContainer";
 
+import './RobotControl.css';
+const MAX_SPEED = 120;
+
 const RobotControl = () => {
   const { sendInstruction, sendDisconectRobot, socket } = useSockets();
   const history = useHistory();
   const [defaultValues, setDefaultValues] = useState({
-    speed: 200, // [0, 255]
-    position: 90, //[0, 180]
+    speed: MAX_SPEED, // [0, MAX_SPEED]
+    positionH: 90, //[0, 180]
+    positionV: 90, //[0, 180]
   });
   const [intervalD, setIntervalD] = useState(false);
   const [intervalQ, setIntervalQ] = useState(false);
@@ -39,6 +47,7 @@ const RobotControl = () => {
       history.push("/");
       return;
     }
+    sendInstruction("Shift");
     socket.on("robot_disconnected", handleRobotDisconnected);
     socket.on("robot_not_connected", handleRobotNotConnected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -161,10 +170,22 @@ const RobotControl = () => {
         sendInstruction(" ");
       }
     } else if (key.state) {
+      if(key.value === 'Shift') {
+        setDefaultValues((prevState) => ({
+          ...prevState,
+          speed: prevState.speed < MAX_SPEED ? prevState.speed + 10 : MAX_SPEED,
+        }));
+      }
+      if(key.value === 'Control') {
+        setDefaultValues((prevState) => ({
+          ...prevState,
+          speed: prevState.speed > 10 ? prevState.speed - 10 : 0,
+        }));
+      }
       sendInstruction(key.value);
     }
   };
-
+  console.log(defaultValues.speed)
   const handleRobotDisconnected = () => {
     setShowModalDisconnected(true);
   };
@@ -176,7 +197,7 @@ const RobotControl = () => {
   const toggleModalDisconnected = () => {
     history.push("/");
   };
-
+  
   return (
     <>
       <Modal isOpen={showModalDisconnected} toggle={toggleModalDisconnected}>
@@ -209,6 +230,21 @@ const RobotControl = () => {
         <CardHeader>
           <h1 className="text-center"> Panneau de commande</h1>
         </CardHeader>
+        <CardBody>
+          <Iframe
+            url={`http://${window.cameraIp}`}
+            className="camera"
+          />
+          <p>Vitesse: </p>
+          <GaugeChart
+            style={{ height: '250px' }}
+            textColor="black"
+            className="gauge"
+            id="gauge-chart2" 
+            nrOfLevels={20} 
+            percent={defaultValues.speed / MAX_SPEED} 
+          />
+        </CardBody>
       </Card>
 
       <Container className="App">

@@ -25,7 +25,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import { fetchList, askCommand } from './api/robot';
 import { useSockets } from './api/websockets';
-import RobotUploadFirmware from './components/upload';
 
 import RefreshIcon from '@material-ui/icons/Refresh';
 import ControlCameraIcon from '@material-ui/icons/ControlCamera';
@@ -68,7 +67,7 @@ function Row({ robot, handleClickControl, isLoading }) {
                   <TableRow>
                     <TableCell>IP</TableCell>
                     <TableCell align="right">Firmware</TableCell>
-                    <TableCell align="right">Battery</TableCell>
+                    <TableCell align="right">Camera IP</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -78,7 +77,7 @@ function Row({ robot, handleClickControl, isLoading }) {
                       {historyRow.ip}
                       </TableCell>
                       <TableCell align="right">{historyRow.firmwareVersion}</TableCell>
-                      <TableCell align="right">{historyRow.batteryVoltage}v</TableCell>
+                      <TableCell align="right">{historyRow.cameraIp}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -88,7 +87,7 @@ function Row({ robot, handleClickControl, isLoading }) {
                 className="d-flex mr-0 ml-auto mt-2 mb-2"
                 outline
                 color="info"
-                onClick={() => handleClickControl(robot.name)}
+                onClick={() => handleClickControl({ jupiterID: robot.name, cameraIp: robot.history[0].cameraIp })}
               >
                 {isLoading ? <CircularProgress /> : <ControlCameraIcon/>}
               </Button>
@@ -109,7 +108,7 @@ function createData(robot) {
       {
         ip: `${robot.ip}:${robot.port}`, 
         firmwareVersion: robot.firmware,
-        batteryVoltage: robot.battery,
+        cameraIp: robot.cameraIp,
       }
     ],
   };
@@ -140,17 +139,17 @@ const App = () => {
     });
   }
   
-  const handleClickControl = async (jupiterID) => {
+  const handleClickControl = async ({ jupiterID, cameraIp }) => {
     setIsLoading(true);
     const { data } = await askCommand(jupiterID, socket.id);
     if (data.error) { 
       robots.find((robot) => robot.name === jupiterID).error = true;
       setIsLoading(false);
     } else {
+      window.cameraIp = cameraIp;
       history.push('/control');
     }
   }
-
 
   return (
     <>
