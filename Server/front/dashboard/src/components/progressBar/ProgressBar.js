@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import React from 'react';
-import Styled from "styled-components"
+import Styled from 'styled-components'
+
+import './ProgressBar.css';
 
 const Container = Styled.div`
   progress[value]{
-    width: ${props => props.width};
+    width: 90%;
     appearance:none;
 
     ::-webkit-progress-bar{
@@ -15,6 +17,7 @@ const Container = Styled.div`
 
     ::-webkit-progress-value{
       height; 10px;
+      width: 10%;
       border-radius:20px;
       background-color: ${props =>props.color}
     }
@@ -27,7 +30,7 @@ const ProgressBar = props => {
   const { value, max , color, width} = props;
 
   return (
-    <Container color={color} width={width}>
+    <Container className="Progress" color={color} width={width}>
       <progress value={value} max={max} />
       <span> {(value / max) * 100}% </span>
     </Container>

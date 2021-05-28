@@ -48,7 +48,7 @@ const RobotControl = () => {
   const [showModalDisconnected, setShowModalDisconnected] = useState(false);
   const [showModalNotConnected, setShowModalNotConnected] = useState(false);
 
-  const DEFAULT_ROTATION = (defaultValues.turnValue/ 180) * 100
+  const DEFAULT_ROTATION = (defaultValues.turnValue / 180) * 100
   const [value, updateValue] = useState(DEFAULT_ROTATION);
 
 
@@ -93,9 +93,9 @@ const RobotControl = () => {
     if (intervalCL) {
       const interval = setInterval(() => {
         sendInstruction("arrowleft");
-        updateValue(oldValue =>{
+        updateValue(oldValue => {
           const newValue = oldValue - 10;
-          if(newValue === 0){
+          if (newValue === 0) {
             clearInterval(interval);
           }
           return newValue;
@@ -109,9 +109,9 @@ const RobotControl = () => {
     if (intervalCR) {
       const interval = setInterval(() => {
         sendInstruction("arrowright");
-        updateValue(oldValue =>{
+        updateValue(oldValue => {
           const newValue = oldValue + 10;
-          if(newValue === 100){
+          if (newValue === 100) {
             clearInterval(interval);
           }
           return newValue;
@@ -266,11 +266,13 @@ const RobotControl = () => {
           <Row>
             <Iframe url={`http://${window.cameraIp}`} className="camera" />
           </Row>
-          <Row>
+          <Row className="justify-content-center">
             <Col xs="6">
-              <h2 className="text-center">Vitesse : </h2>
+              <Row className="justify-content-center">
+                <h2 className="text-center">Vitesse : </h2>
+              </Row>
               <GaugeChart
-                style={{ height: "250px" }}
+                style={{ height: "250px", margin: "auto"}}
                 textColor="black"
                 className="gauge align-items-center"
                 id="gauge-chart2"
@@ -278,12 +280,17 @@ const RobotControl = () => {
                 percent={defaultValues.speed / MAX_SPEED}
               />
             </Col>
-            <Col xs="6">
+            <Col xs="6" className="justify-content-center">
+              <Row className="justify-content-center">
+                <h2 className="text-center">Direction : </h2>
+              </Row>
               <ProgressBar
                 value={value}
               />
-              <h2 className="text-center">Direction : </h2>
-              <img id="direction"></img>
+              <div class="imgwrap">
+                <img id="direction"></img>
+              </div>
+
             </Col>
           </Row>
         </CardBody>

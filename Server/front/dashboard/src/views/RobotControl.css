@@ -10,7 +10,9 @@
     width: 500px;
 }
 
-#direction{
-    height:100px;
-    width:100px;
+#direction {
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    display: block;
 }
