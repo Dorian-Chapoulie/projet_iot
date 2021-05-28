@@ -8,11 +8,13 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Row,
+  Col,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { Container } from "@material-ui/core";
-import Iframe from 'react-iframe'
-import GaugeChart from 'react-gauge-chart'
+import Iframe from "react-iframe";
+import GaugeChart from "react-gauge-chart";
 
 import { initInputsEvent, offInitInputsEvent } from "../lib/Input";
 import { useSockets } from "../api/websockets";
@@ -21,8 +23,12 @@ import RobotUploadFirmware from "../components/upload";
 import { ReturnButton } from "../components/returnButton";
 import PopOverContainer from "../components/popOver/popOverContainer";
 
-import './RobotControl.css';
+import ProgressBar from "../components/progressBar/ProgressBar";
+
+import "./RobotControl.css";
 const MAX_SPEED = 120;
+
+
 
 const RobotControl = () => {
   const { sendInstruction, sendDisconectRobot, socket } = useSockets();
@@ -31,6 +37,7 @@ const RobotControl = () => {
     speed: MAX_SPEED, // [0, MAX_SPEED]
     positionH: 90, //[0, 180]
     positionV: 90, //[0, 180]
+    turnValue: 90, //[0, 180]
   });
   const [intervalD, setIntervalD] = useState(false);
   const [intervalQ, setIntervalQ] = useState(false);
@@ -40,6 +47,10 @@ const RobotControl = () => {
   const [intervalCD, setIntervalCD] = useState(false);
   const [showModalDisconnected, setShowModalDisconnected] = useState(false);
   const [showModalNotConnected, setShowModalNotConnected] = useState(false);
+
+  const DEFAULT_ROTATION = (defaultValues.turnValue/ 180) * 100
+  const [value, updateValue] = useState(DEFAULT_ROTATION);
+
 
   useEffect(() => {
     initInputsEvent(handleKeyPressed);
@@ -82,6 +93,13 @@ const RobotControl = () => {
     if (intervalCL) {
       const interval = setInterval(() => {
         sendInstruction("arrowleft");
+        updateValue(oldValue =>{
+          const newValue = oldValue - 10;
+          if(newValue === 0){
+            clearInterval(interval);
+          }
+          return newValue;
+        })
       }, 100);
       return () => clearInterval(interval);
     }
@@ -91,6 +109,13 @@ const RobotControl = () => {
     if (intervalCR) {
       const interval = setInterval(() => {
         sendInstruction("arrowright");
+        updateValue(oldValue =>{
+          const newValue = oldValue + 10;
+          if(newValue === 100){
+            clearInterval(interval);
+          }
+          return newValue;
+        })
       }, 100);
       return () => clearInterval(interval);
     }
@@ -115,11 +140,13 @@ const RobotControl = () => {
   }, [intervalCD, sendInstruction]);
 
   const handleKeyPressed = (key) => {
+    let direction = document.getElementById("direction");
     if (key.value === "d") {
       if (key.state) {
         sendInstruction(key.value);
         setIntervalD(true);
         setIntervalQ(false);
+        direction.setAttribute("src", "https://i.ibb.co/BKXnFPV/droite.png");
       } else {
         setIntervalD(false);
       }
@@ -128,6 +155,7 @@ const RobotControl = () => {
         sendInstruction(key.value);
         setIntervalQ(true);
         setIntervalD(false);
+        direction.setAttribute("src", "https://i.ibb.co/q5BsrYq/gauche.png");
       } else {
         setIntervalQ(false);
       }
@@ -136,6 +164,7 @@ const RobotControl = () => {
         sendInstruction(key.value);
         setIntervalCU(true);
         setIntervalCD(false);
+        direction.setAttribute("src", "https://i.ibb.co/998JfYM/camUp.png");
       } else {
         setIntervalCU(false);
       }
@@ -144,6 +173,7 @@ const RobotControl = () => {
         sendInstruction(key.value);
         setIntervalCD(true);
         setIntervalCU(false);
+        direction.setAttribute("src", "https://i.ibb.co/wCGmw00/camDown.png");
       } else {
         setIntervalCD(false);
       }
@@ -152,6 +182,7 @@ const RobotControl = () => {
         sendInstruction(key.value);
         setIntervalCL(true);
         setIntervalCR(false);
+        direction.setAttribute("src", "https://i.ibb.co/hFqLnnT/camLeft.png");
       } else {
         setIntervalCL(false);
       }
@@ -160,6 +191,7 @@ const RobotControl = () => {
         sendInstruction(key.value);
         setIntervalCR(true);
         setIntervalCL(false);
+        direction.setAttribute("src", "https://i.ibb.co/4gVdbSG/camRight.png");
       } else {
         setIntervalCR(false);
       }
@@ -170,13 +202,13 @@ const RobotControl = () => {
         sendInstruction(" ");
       }
     } else if (key.state) {
-      if(key.value === 'Shift') {
+      if (key.value === "Shift") {
         setDefaultValues((prevState) => ({
           ...prevState,
           speed: prevState.speed < MAX_SPEED ? prevState.speed + 10 : MAX_SPEED,
         }));
       }
-      if(key.value === 'Control') {
+      if (key.value === "Control") {
         setDefaultValues((prevState) => ({
           ...prevState,
           speed: prevState.speed > 10 ? prevState.speed - 10 : 0,
@@ -185,7 +217,7 @@ const RobotControl = () => {
       sendInstruction(key.value);
     }
   };
-  console.log(defaultValues.speed)
+  console.log(defaultValues.speed);
   const handleRobotDisconnected = () => {
     setShowModalDisconnected(true);
   };
@@ -197,7 +229,7 @@ const RobotControl = () => {
   const toggleModalDisconnected = () => {
     history.push("/");
   };
-  
+
   return (
     <>
       <Modal isOpen={showModalDisconnected} toggle={toggleModalDisconnected}>
@@ -231,22 +263,31 @@ const RobotControl = () => {
           <h1 className="text-center"> Panneau de commande</h1>
         </CardHeader>
         <CardBody>
-          <Iframe
-            url={`http://${window.cameraIp}`}
-            className="camera"
-          />
-          <p>Vitesse: </p>
-          <GaugeChart
-            style={{ height: '250px' }}
-            textColor="black"
-            className="gauge"
-            id="gauge-chart2" 
-            nrOfLevels={20} 
-            percent={defaultValues.speed / MAX_SPEED} 
-          />
+          <Row>
+            <Iframe url={`http://${window.cameraIp}`} className="camera" />
+          </Row>
+          <Row>
+            <Col xs="6">
+              <h2 className="text-center">Vitesse : </h2>
+              <GaugeChart
+                style={{ height: "250px" }}
+                textColor="black"
+                className="gauge align-items-center"
+                id="gauge-chart2"
+                nrOfLevels={20}
+                percent={defaultValues.speed / MAX_SPEED}
+              />
+            </Col>
+            <Col xs="6">
+              <ProgressBar
+                value={value}
+              />
+              <h2 className="text-center">Direction : </h2>
+              <img id="direction"></img>
+            </Col>
+          </Row>
         </CardBody>
       </Card>
-
       <Container className="App">
         <RobotUploadFirmware />
       </Container>

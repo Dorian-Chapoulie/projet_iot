@@ -9,3 +9,8 @@
 .gauge {
     width: 500px;
 }
+
+#direction{
+    height:100px;
+    width:100px;
+}
