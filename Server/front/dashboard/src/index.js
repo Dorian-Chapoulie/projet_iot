@@ -14,6 +14,7 @@ import { WSocketsProvider } from './api/websockets';
 
 import App from './App';
 import Control from './views/RobotControl';
+import HeatMap from './views/HeatMap';
 
 ReactDOM.render(
   <>
@@ -22,6 +23,9 @@ ReactDOM.render(
         <Switch>
           <Route path="/control">
             <Control />
+          </Route>
+          <Route path="/heatmap">
+            <HeatMap />
           </Route>
           <Route path="/">
             <App />
