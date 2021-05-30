@@ -28,8 +28,6 @@ import ProgressBar from "../components/progressBar/ProgressBar";
 import "./RobotControl.css";
 const MAX_SPEED = 120;
 
-
-
 const RobotControl = () => {
   const { sendInstruction, sendDisconectRobot, socket } = useSockets();
   const history = useHistory();
@@ -48,9 +46,8 @@ const RobotControl = () => {
   const [showModalDisconnected, setShowModalDisconnected] = useState(false);
   const [showModalNotConnected, setShowModalNotConnected] = useState(false);
 
-  const DEFAULT_ROTATION = (defaultValues.turnValue / 180) * 100
+  const DEFAULT_ROTATION = (defaultValues.turnValue / 180) * 100;
   const [value, updateValue] = useState(DEFAULT_ROTATION);
-
 
   useEffect(() => {
     initInputsEvent(handleKeyPressed);
@@ -93,13 +90,13 @@ const RobotControl = () => {
     if (intervalCL) {
       const interval = setInterval(() => {
         sendInstruction("arrowleft");
-        updateValue(oldValue => {
-          const newValue = oldValue - 10;
-          if (newValue === 0) {
-            clearInterval(interval);
+        updateValue((oldValue) => {
+          let newValue = oldValue - 10;
+          if (newValue <= 0) {
+            newValue = 0;
           }
           return newValue;
-        })
+        });
       }, 100);
       return () => clearInterval(interval);
     }
@@ -109,13 +106,13 @@ const RobotControl = () => {
     if (intervalCR) {
       const interval = setInterval(() => {
         sendInstruction("arrowright");
-        updateValue(oldValue => {
-          const newValue = oldValue + 10;
-          if (newValue === 100) {
-            clearInterval(interval);
+        updateValue((oldValue) => {
+          let newValue = oldValue + 10;
+          if (newValue  >= 100) {
+            newValue = 100;
           }
           return newValue;
-        })
+        });
       }, 100);
       return () => clearInterval(interval);
     }
@@ -125,6 +122,13 @@ const RobotControl = () => {
     if (intervalCU) {
       const interval = setInterval(() => {
         sendInstruction("arrowup");
+        updateValue((oldValue) => {
+          let newValue = oldValue + 10;
+          if (newValue >= 100) {
+            newValue = 100;
+          }
+          return newValue;
+        });
       }, 100);
       return () => clearInterval(interval);
     }
@@ -134,6 +138,13 @@ const RobotControl = () => {
     if (intervalCD) {
       const interval = setInterval(() => {
         sendInstruction("arrowdown");
+        updateValue((oldValue) => {
+          let newValue = oldValue - 10;
+          if (newValue <= 0) {
+            newValue = 0;
+          }
+          return newValue;
+        });
       }, 100);
       return () => clearInterval(interval);
     }
@@ -267,12 +278,12 @@ const RobotControl = () => {
             <Iframe url={`http://${window.cameraIp}`} className="camera" />
           </Row>
           <Row className="justify-content-center">
-            <Col xs="6">
+            <Col xs="5">
               <Row className="justify-content-center">
                 <h2 className="text-center">Vitesse : </h2>
               </Row>
               <GaugeChart
-                style={{ height: "250px", margin: "auto"}}
+                style={{ height: "250px", margin: "auto" }}
                 textColor="black"
                 className="gauge align-items-center"
                 id="gauge-chart2"
@@ -280,17 +291,14 @@ const RobotControl = () => {
                 percent={defaultValues.speed / MAX_SPEED}
               />
             </Col>
-            <Col xs="6" className="justify-content-center">
+            <Col xs="5" className="justify-content-center">
               <Row className="justify-content-center">
                 <h2 className="text-center">Direction : </h2>
               </Row>
-              <ProgressBar
-                value={value}
-              />
+              <ProgressBar value={value} />
               <div class="imgwrap">
                 <img id="direction"></img>
               </div>
-
             </Col>
           </Row>
         </CardBody>
