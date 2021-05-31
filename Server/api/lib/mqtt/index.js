@@ -1,6 +1,7 @@
 const mqtt = require('mqtt');
 const { config } = require('../../config');
 const robotService = require('../../services/robot');
+const mongoService = require('../mongo');
 
 let client;
 
@@ -43,9 +44,12 @@ const MQTT_init = () => {
 					robotService.addNewRobot(data);
 				}
 				break;
+			case config.MQTT.subTopics[config.MQTT.subTopicId.SENSOR]:
+				console.log("DATA:", data);
+				//mongoService.addData(data);
+				break;
 			default: break;
 		}
-		//console.log(`[${topic}]: `, data);
 	});
 
 }

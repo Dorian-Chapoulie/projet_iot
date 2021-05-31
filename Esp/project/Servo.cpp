@@ -18,14 +18,14 @@ void ServoHandler::rotate(byte position) {
 }
 
 void ServoHandler::turnLeft() {
-  if (m_position - m_turnStep >= 0) {
+  if (m_position - m_turnStep >= 60) {
      m_position -= m_turnStep;
   }
   servo.write(m_position);
 }
 
 void ServoHandler::turnRight() {
-  if (m_position + m_turnStep <= 180) {
+  if (m_position + m_turnStep <= 130) {
      m_position += m_turnStep;
   }
   servo.write(m_position);

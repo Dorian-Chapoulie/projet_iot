@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const { MQTT_init } = require('./lib/mqtt');
 const { initSocketProvider } = require('./lib/websocket');
+const mongoService = require('./lib/mongo');
 const { config } = require('./config/index');
 
 const app = express();
@@ -19,6 +20,7 @@ initSocketProvider(io);
 
 
 const robot = require('./routes/robot');
+mongoService.init();
 
 const port = process.env.PORT || 3001;
 app.use(express.json())

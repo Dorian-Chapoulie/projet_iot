@@ -1,5 +1,9 @@
 #include <PubSubClient.h>
 #include <ArduinoOTA.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+
 #include "TCPServer.hpp"
 #include "Motor.hpp"
 #include "Servo.hpp"
@@ -9,9 +13,8 @@
 #define RXD2 16
 #define TXD2 17
 
-const String ssid = "";
-const String password = "";
-
+const String ssid = "Gaëllepue";
+const String password = "dorian06";
 
 TCPServer* server = TCPServer::getInstance();
 
@@ -22,6 +25,9 @@ ServoHandler* servoCamVertical = nullptr;
 MQTTClient* mqttClient = nullptr;
 EventManager* eventManager = nullptr;
 
+const int oneWireBus = 13;     
+OneWire oneWire(oneWireBus);
+DallasTemperature sensors(&oneWire);
 
 int servoPin = 22;
 int servoCamHonrizonPin = 21;
@@ -30,11 +36,24 @@ int motor1Pin1 = 33;
 int motor1Pin2 = 32;
 int enable1Pin = 14;
 
+String get_WifiData() {
+  int numNetworks = WiFi.scanNetworks();
+  String payloadWifi = "{ \"jupiterID\": \"";
+  payloadWifi += WiFi.macAddress().c_str();
+  payloadWifi += "\",";
+  for (int i = 0; i < numNetworks; i++) {
+    payloadWifi += '"' + WiFi.SSID(i) + '"' + ":" + '"'+WiFi.RSSI(i)+'"'+ ",\n";
+  }
+ 
+  return payloadWifi;
+}
+
 
 void setup() {
   Serial.begin(9600);
   WiFi.mode(WIFI_STA);
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
+  sensors.begin();
   
   TCPServer::init(25565, ssid, password);
   MQTTClient::init(ssid, password);
@@ -95,6 +114,9 @@ void setup() {
 }
 
 String command;
+String payload;
+int sendData = 0;
+
 void loop() {
   mqttClient->loop();
   ArduinoOTA.handle();
@@ -102,5 +124,18 @@ void loop() {
     command = Serial2.readStringUntil('\n');
     mqttClient->camIp = command.substring(0, command.length() - 1);
   }
+
+  if (sendData >= 60) {
+    sensors.requestTemperatures(); 
+    float temperatureC = sensors.getTempCByIndex(0);
+    payload = get_WifiData();
+    payload += "\"temp\":\"" + String(temperatureC) + "\"}";
+    char data[payload.length() + 1];
+    payload.toCharArray(data, (payload.length() + 1));
+    MQTTClient::getInstance()->m_mqttClient->publish(MQTTClient::getInstance()->m_pubTopics[2], data);
+    sendData = 0;
+  }
+
+  sendData++;
   delay(1000);
 }
