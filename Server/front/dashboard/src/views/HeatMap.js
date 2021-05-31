@@ -191,9 +191,6 @@ function HeatMap() {
   return (
     <>
       <div style={{ position: 'relative', height: '715px', width: '1169px' }} className="HeatMap"></div>
-      {estimatedPosition && (
-        <p>Position: {estimatedPosition}</p>
-      )}
     </>
   );
 }

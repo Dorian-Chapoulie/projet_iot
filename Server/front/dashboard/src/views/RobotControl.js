@@ -23,7 +23,6 @@ import RobotUploadFirmware from "../components/upload";
 import { ReturnButton } from "../components/returnButton";
 import PopOverContainer from "../components/popOver/popOverContainer";
 
-import ProgressBar from "../components/progressBar/ProgressBar";
 
 import "./RobotControl.css";
 const MAX_SPEED = 120;
@@ -295,7 +294,6 @@ const RobotControl = () => {
               <Row className="justify-content-center">
                 <h2 className="text-center">Direction : </h2>
               </Row>
-              <ProgressBar value={value} />
               <div class="imgwrap">
                 <img id="direction"></img>
               </div>
