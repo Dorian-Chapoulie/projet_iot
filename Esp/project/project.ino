@@ -42,7 +42,7 @@ String get_WifiData() {
   payloadWifi += WiFi.macAddress().c_str();
   payloadWifi += "\",";
   for (int i = 0; i < numNetworks; i++) {
-    payloadWifi += '"' + WiFi.SSID(i) + '"' + ":" + '"'+WiFi.RSSI(i)+'"'+ ",\n";
+    payloadWifi += '"' + WiFi.BSSIDstr(i) + '"' + ":" + '"'+WiFi.RSSI(i)+'"'+ ",\n";
   }
  
   return payloadWifi;
