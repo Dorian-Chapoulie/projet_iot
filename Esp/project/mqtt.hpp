@@ -15,7 +15,7 @@ public:
     String camIp = "";
 
     PubSubClient* m_mqttClient = nullptr;
-    const char* m_pubTopics[PUB_TOPIC_NUMBER] = {"robot/jupiter/data", "robot/jupiter/available", "robot/jupiter/sensor"};
+    const char* m_pubTopics[PUB_TOPIC_NUMBER] = {"robot/jupiter/data", "robot/jupiter/available", "robot/jupiter/temp"};
 private:
     MQTTClient(const String& ssid, const String& passwd);
     void mqttInit(const String& ssid, const String& passwd);

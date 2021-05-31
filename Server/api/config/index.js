@@ -9,7 +9,7 @@ const config = {
         subTopics: [
             'robot/jupiter/data',
             'robot/jupiter/available',
-            'robot/jupiter/sensor'
+            'robot/jupiter/temp'
         ],
         pubTopics: {
             ROBOT_IS_AVAILABLE: 'robot/jupiter/isavailable',

@@ -13,8 +13,8 @@
 #define RXD2 16
 #define TXD2 17
 
-const String ssid = "Gaëllepue";
-const String password = "dorian06";
+const String ssid = "";
+const String password = "";
 
 TCPServer* server = TCPServer::getInstance();
 

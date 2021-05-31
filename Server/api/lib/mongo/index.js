@@ -21,11 +21,16 @@ const init = () => {
 
 const addData = (data) => {
     console.log('adding: ', data)
-    dbo.collection(mongoName).insertOne(data, (err, res) => {
+    dbo.collection(mongoName).insertOne({ ...data, date: Date.now() }, (err, res) => {
         if (err) throw err;
     });
+}
+
+const getData = async () => {
+    return dbo.collection(mongoName).find({}).toArray();
 }
 
 
 module.exports.init = init;
 module.exports.addData = addData;
+module.exports.getData = getData;

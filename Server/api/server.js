@@ -20,6 +20,7 @@ initSocketProvider(io);
 
 
 const robot = require('./routes/robot');
+const data = require('./routes/data');
 mongoService.init();
 
 const port = process.env.PORT || 3001;
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(express.static(__dirname + '/public'));
 
 app.use('/robot', robot);
+app.use('/data', data);
 
 app.listen(port, () => {
     console.log(`[Server] running at http://localhost:${port}`);
