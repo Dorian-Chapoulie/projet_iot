@@ -147,8 +147,8 @@ function HeatMap() {
         setEstimatedPosition('Unknown');
       } else if (foundBornes.length === 1) {
         const estimated = {
-          x: mapData[foundBornes[0].location.toLowerCase()].x,
-          y: mapData[foundBornes[0].location.toLowerCase()].y,
+          x: mapData[foundBornes[0].location].x,
+          y: mapData[foundBornes[0].location].y,
         }
         setEstimatedPosition(foundBornes[0].location);
         points.push(estimated);
@@ -158,8 +158,9 @@ function HeatMap() {
         let y = 0;
         let closestAP = foundBornes[0];
         foundBornes.forEach((pos) => {
-          x += mapData[pos.location.toLowerCase()].x;
-          y += mapData[pos.location.toLowerCase()].y;
+          console.log(pos)
+          x += mapData[pos.location].x;
+          y += mapData[pos.location].y;
           if (pos.rssi < closestAP.rssi) {
             closestAP = pos;
           }
