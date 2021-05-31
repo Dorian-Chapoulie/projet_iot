@@ -205,12 +205,6 @@ function HeatMap() {
                 <h1 className="text-center align-middle">Heatmap des localisations récentes du robot</h1>
               </CardHeader>
               <div style={{ position: 'relative', height: '715px', width: '1169px' }} className="HeatMap"></div>
-
-              <CardFooter>
-                {estimatedPosition && (
-                  <p>Position du robot: {estimatedPosition}</p>
-                )}
-              </CardFooter>
             </Card>
           </Container>
         </Col>
