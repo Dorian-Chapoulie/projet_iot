@@ -40,7 +40,9 @@ void TCPServer::init(unsigned int port, const String& ssid, const String& passwd
 void TCPServer::loop(void* params) {
   TCPServer* _this = ((TCPServer*)params);
   while(_this->m_listen) {
+
     WiFiClient client = _this->server->available();
+
     unsigned long currentTime = millis();
     unsigned long previousTime = 0;
 
@@ -50,14 +52,10 @@ void TCPServer::loop(void* params) {
       client.write(WiFi.macAddress().c_str());
 
       if (!_this->isAvailable){
-        client.stop();
+          client.stop();
       }
 
       _this->isAvailable = false;
-      EventCallbackData data;
-      data.iValue = 0;
-      EventManager::getInstance()->trigerEvent("isavailable", data);
-      
       String currentLine = "";
       
       while (client.connected() /*&& currentTime - previousTime <= _this->m_timeout*/) {
@@ -76,8 +74,6 @@ void TCPServer::loop(void* params) {
 
       client.stop();
       _this->isAvailable = true;
-      data.iValue = 1;
-      EventManager::getInstance()->trigerEvent("isavailable", data);
     }
   }
 }

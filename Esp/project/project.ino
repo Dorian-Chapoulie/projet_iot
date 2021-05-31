@@ -116,6 +116,7 @@ void setup() {
 String command;
 String payload;
 int sendData = 0;
+EventCallbackData data;
 
 void loop() {
   mqttClient->loop();
@@ -135,6 +136,9 @@ void loop() {
     MQTTClient::getInstance()->m_mqttClient->publish(MQTTClient::getInstance()->m_pubTopics[2], data);
     sendData = 0;
   }
+
+  data.iValue = TCPServer::getInstance()->getIsAvailable() ? 1 : 0;
+  eventManager->trigerEvent("isavailable", data);
 
   sendData++;
   delay(1000);
