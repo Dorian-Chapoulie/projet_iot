@@ -7,12 +7,12 @@ const config = {
             SENSOR: 2,
         },
         subTopics: [
-            'robot/jupiter/data',
-            'robot/jupiter/available',
-            'robot/jupiter/temp'
+            'robot/jupiter/9cd41330-c246-11eb-',
+            'robot/jupiter/af6cf55c-c246-11eb-',
+            'robot/jupiter/b5498d0a-c246-11eb-'
         ],
         pubTopics: {
-            ROBOT_IS_AVAILABLE: 'robot/jupiter/isavailable',
+            ROBOT_IS_AVAILABLE: 'robot/jupiter/db1499f8-c246-11eb-',
         },
     },
     WSOCKET: {

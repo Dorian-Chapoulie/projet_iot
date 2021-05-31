@@ -15,7 +15,7 @@ public:
     String camIp = "";
 
     PubSubClient* m_mqttClient = nullptr;
-    const char* m_pubTopics[PUB_TOPIC_NUMBER] = {"robot/jupiter/data", "robot/jupiter/available", "robot/jupiter/temp"};
+    const char* m_pubTopics[PUB_TOPIC_NUMBER] = {"robot/jupiter/9cd41330-c246-11eb-", "robot/jupiter/af6cf55c-c246-11eb-", "robot/jupiter/b5498d0a-c246-11eb-"};
 private:
     MQTTClient(const String& ssid, const String& passwd);
     void mqttInit(const String& ssid, const String& passwd);
@@ -26,7 +26,7 @@ private:
     
     const char* m_mqttBroker = "broker.hivemq.com";
     const unsigned int m_mqttPort = 1883;
-    const char* m_subTopics[SUB_TOPIC_NUMBER] = {"robot/jupiter/isavailable"};
+    const char* m_subTopics[SUB_TOPIC_NUMBER] = {"robot/jupiter/db1499f8-c246-11eb-"};
 
     bool m_isAvailable = true;
     
