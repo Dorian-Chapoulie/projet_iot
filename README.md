@@ -127,3 +127,13 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
 |I-D-< valeur> | <b>Emetteur </b> : API <br> <b>Receveur </b>: Jupiter <br> <b> Description </b> : Protocole permettant de contrôler de la direction du robot <br> <b>Paramètres </b> : Q/D <br> <b>Exemple </b> : I-D-D => aller à droite | 
 |I-M-< valeur> |  <b>Emetteur </b> : API <br> <b>Receveur </b>: Jupiter <br> <b> Description </b> : Protocole permettant de contrôler la motorisation du robot <br> <b>Paramètres </b> : A/B/Z/S/C <br> <b>Exemple </b> : I-M-A => augmenter la vitesse |  
 |I-C-< valeur> | <b>Emetteur </b> : API <br> <b>Receveur </b>: Jupiter <br> <b> Description </b> : Protocole permettant de contrôler la caméra du robot <br> <b>Paramètres </b> : H/B/G/D <br> <b>Exemple </b> : I-C-G => déplacer la caméra à gauche |  
+  
+  
+## 7. Installation
+  
+  Uploader le code Esp/Project dans l'esp32  
+  Uploader le code Esp-Cam/projet dans l'esp32CAM  
+  Pour le front: Aller dans Server/front/dashboard => npm i puis npm start  
+  Pour l'API: Aller dans Server/api => npm i puis npm start  
+  Pour le cablage, regarder le schéma à la racine du projet  
+  
