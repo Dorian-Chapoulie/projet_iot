@@ -137,3 +137,5 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
   Pour l'API: Aller dans Server/api => npm i puis npm start  
   Pour le cablage, regarder le schéma à la racine du projet  
   
+  PS: vous trouverez dans le dossier "libraries" les libs utilisés dans ArduinoIDE
+  
