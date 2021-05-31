@@ -5,11 +5,15 @@ import wifiBornes from '../repos/wifiBornes.json';
 
 import "./HeatMap.css";
 
-let points = [];
+let points = [{
+  x: 0, // x coordinate of the datapoint, a number
+  y: 0, // y coordinate of the datapoint, a number
+  value: 0, // the value at datapoint(x, y)
+}];
 let heatmapInstance = undefined;
 
 const mapData =  {
-  pingPong: {
+  pingpong: {
     x: 820, // x coordinate of the datapoint, a number
     y: 470, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
@@ -33,19 +37,19 @@ const mapData =  {
     value: 10, // the value at datapoint(x, y)
     ssid:""
   },
-  parkingSup: {
+  parkingsup: {
     x: 550, // x coordinate of the datapoint, a number
     y: 100, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
     ssid:""
   },
-  parkingInf: {
+  parkinginf: {
     x: 700, // x coordinate of the datapoint, a number
     y: 590, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
     ssid:""
   },
-  salleTD: {
+  salletd: {
     x: 650, // x coordinate of the datapoint, a number
     y: 410, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
@@ -117,13 +121,14 @@ function HeatMap() {
         }
         setEstimatedPosition(foundBornes[0].location);
         points.push(estimated);
+        updateMap();
       } else {
         let x = 0;
         let y = 0;
         let closestAP = foundBornes[0];
         foundBornes.forEach((pos) => {
-          x = mapData[pos.location.toLowerCase()].x;
-          y = mapData[pos.location.toLowerCase()].y;
+          x += mapData[pos.location.toLowerCase()].x;
+          y += mapData[pos.location.toLowerCase()].y;
           if (pos.rssi < closestAP.rssi) {
             closestAP = pos;
           }
@@ -132,28 +137,24 @@ function HeatMap() {
           x: x / foundBornes.length,
           y: y / foundBornes.length,
         }
-
+        setEstimatedPosition(closestAP.location);
         points.push({
           ...estimated,
           value: data.temp,
-        })
-        setEstimatedPosition(closestAP.location);
+        });
+        updateMap();
       }
-      console.log("poitns:",points)
     });
     
   }, [dataList])
 
-  useEffect(() => {
-    const data = {
+
+  const updateMap = () => {
+    const values = {
       data: points,
     };
-    heatmapInstance.setData(data);
-  }, [points, heatmapInstance])
-
-  useEffect(() => {
-    points = [];
-  }, []);
+    heatmapInstance.setData(values);
+  };
 
   return (
     <>
