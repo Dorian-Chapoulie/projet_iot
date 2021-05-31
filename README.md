@@ -131,9 +131,9 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
   
 ## 7. Installation
   
-  Uploader le code Esp/Project dans l'esp32
-  Uploader le code Esp-Cam/projet dans l'esp32CAM
-  Pour le front: Aller dans Server/front/dashboard => npm i puis npm start
-  Pour l'API: Aller dans Server/api => npm i puis npm start
-  Pour le cablage, regarder le schéma à la racine du projet
+  Uploader le code Esp/Project dans l'esp32  
+  Uploader le code Esp-Cam/projet dans l'esp32CAM  
+  Pour le front: Aller dans Server/front/dashboard => npm i puis npm start  
+  Pour l'API: Aller dans Server/api => npm i puis npm start  
+  Pour le cablage, regarder le schéma à la racine du projet  
   
