@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import h337 from "heatmap.js";
 import { fetchDataList } from "../api/robot";
 import wifiBornes from '../repos/wifiBornes.json';
-
+import {
+  Container,
+  Card,
+  CardHeader,
+  Row,
+  Col,
+  CardFooter,
+} from "reactstrap";
 import "./HeatMap.css";
 
 let points = [{
@@ -190,7 +197,24 @@ function HeatMap() {
 
   return (
     <>
-      <div style={{ position: 'relative', height: '715px', width: '1169px' }} className="HeatMap"></div>
+      <Row className="w-100">
+        <Col className="my-auto">
+          <Container>
+            <Card>
+              <CardHeader>
+                <h1 className="text-center align-middle">Heatmap des localisations récentes du robot</h1>
+              </CardHeader>
+              <div style={{ position: 'relative', height: '715px', width: '1169px' }} className="HeatMap"></div>
+
+              <CardFooter>
+                {estimatedPosition && (
+                  <p>Position du robot: {estimatedPosition}</p>
+                )}
+              </CardFooter>
+            </Card>
+          </Container>
+        </Col>
+      </Row>
     </>
   );
 }

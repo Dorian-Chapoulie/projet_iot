@@ -266,15 +266,7 @@ const RobotControl = () => {
           </Button>
         </ModalFooter>
       </Modal>
-      <PopOverContainer />
-      <Link to="/heatmap">
-        <Button className="float-right mr-2" outline color="info">
-          HeatMap du robot
-      </Button>
-      </Link>
-
-      <ReturnButton />
-      <Card>
+      <Card className="ControlsPage">
         <CardHeader>
           <h1 className="text-center"> Panneau de commande</h1>
         </CardHeader>
@@ -288,7 +280,7 @@ const RobotControl = () => {
                 <h2 className="text-center">Vitesse : </h2>
               </Row>
               <GaugeChart
-                style={{ height: "250px", margin: "auto" }}
+                style={{ height: "100px", margin: "auto" }}
                 textColor="black"
                 className="gauge align-items-center"
                 id="gauge-chart2"
@@ -301,7 +293,7 @@ const RobotControl = () => {
                 <h2 className="text-center">Direction : </h2>
               </Row>
               <div class="imgwrap">
-                <img id="direction"></img>
+                <img id="direction"/>
               </div>
             </Col>
           </Row>

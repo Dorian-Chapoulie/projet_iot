@@ -153,7 +153,7 @@ const App = () => {
 
   return (
     <>
-      <h1 className="text-center"> Liste des robots </h1>
+      <h1 className="text-center white mt-5"> Liste des robots </h1>
       <Container className="App">
         {isRefreshLoading && <LinearProgress />}
         <TableContainer component={Paper}>

@@ -81,8 +81,8 @@ const RobotUploadFirmware = () => {
 
     return (
         <>
-            <Container className="App">
-                <Typography className="d-inline">Uploader un nouveau firmware</Typography>
+            <Container className="white App">
+                <Typography className="d-inline white">Uploader un nouveau firmware</Typography>
                 <Button
                     variant="contained"
                     color="default"

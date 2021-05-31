@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
+
+import './popOverContainer.css';
+
 const PopOverContainer = () => {
+
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const toggle = () => setPopoverOpen(!popoverOpen);
@@ -49,10 +53,11 @@ const PopOverContainer = () => {
       key: "RIGHT",
     },
   };
-
   return (
+    <>
+    
     <div className="PopOverContainer">
-      <Button className="float-right mr-2" id="Popover" outline color="info">
+      <Button className=" mr-2" id="Popover" outline color="info">
         Controles
       </Button>
       <Popover
@@ -77,6 +82,7 @@ const PopOverContainer = () => {
         </PopoverBody>
       </Popover>
     </div>
+    </>
   );
 };
 

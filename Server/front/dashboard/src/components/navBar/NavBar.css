@@ -1,0 +1,12 @@
+.LogoTitle {
+	position: absolute;
+}
+.NavBarJupiter a {
+	color: white;
+	font-size: 1.5em;
+	font-weight: 1em;
+}
+.navbar-brand {
+	font-size: 5em;
+	font-weight: 1em;
+}

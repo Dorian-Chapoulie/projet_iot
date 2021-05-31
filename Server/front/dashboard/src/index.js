@@ -15,10 +15,12 @@ import { WSocketsProvider } from './api/websockets';
 import App from './App';
 import Control from './views/RobotControl';
 import HeatMap from './views/HeatMap';
+import {NavBar} from './components/navBar/NavBar';
 
 ReactDOM.render(
   <>
     <WSocketsProvider>
+      <NavBar/>
       <Router>
         <Switch>
           <Route path="/control">
