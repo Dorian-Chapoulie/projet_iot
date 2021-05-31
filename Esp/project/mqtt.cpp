@@ -41,7 +41,7 @@ void MQTTClient::mqttInit(const String& ssid, const String& passwd) {
     payload += "\", \"isAvailable\": \"" ;
     payload += d.iValue ? "true" : "false"; 
     payload += "\", \"firmware\": ";
-    payload += "\"1.0\","; 
+    payload += "\"1.1\","; 
     payload += "\"ip\": \"";
     payload += WiFi.localIP().toString();
     payload += "\", \"port\": \"";

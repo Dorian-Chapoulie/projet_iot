@@ -45,6 +45,7 @@ const MQTT_init = () => {
 				}
 				break;
 			case config.MQTT.subTopics[config.MQTT.subTopicId.SENSOR]:
+				console.log(`[${topic}]:`, data)
 				mongoService.addData(data);
 				break;
 			default: break;
