@@ -126,7 +126,7 @@ void loop() {
     mqttClient->camIp = command.substring(0, command.length() - 1);
   }
 
-  if (sendData >= 60) {
+  if (sendData >= 10) {
     sensors.requestTemperatures(); 
     float temperatureC = sensors.getTempCByIndex(0);
     payload = get_WifiData();
@@ -139,7 +139,7 @@ void loop() {
 
   data.iValue = TCPServer::getInstance()->getIsAvailable() ? 1 : 0;
   eventManager->trigerEvent("isavailable", data);
-
+ 
   sendData++;
-  delay(1000);
+  delay(500);
 }

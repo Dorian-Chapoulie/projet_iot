@@ -21,6 +21,7 @@ MQTTClient::~MQTTClient(){
 
 void MQTTClient::mqttInit(const String& ssid, const String& passwd) {
   m_mqttClient = new PubSubClient(wifiClient);
+  m_mqttClient->setBufferSize(512);
 
   WiFi.begin(ssid.c_str(), passwd.c_str());
   while(WiFi.status() != WL_CONNECTED){
