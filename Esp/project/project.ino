@@ -126,7 +126,7 @@ void loop() {
     mqttClient->camIp = command.substring(0, command.length() - 1);
   }
 
-  if (sendData >= 10) {
+  if (sendData >= 60) {
     sensors.requestTemperatures(); 
     float temperatureC = sensors.getTempCByIndex(0);
     payload = get_WifiData();
