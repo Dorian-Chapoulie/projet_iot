@@ -11,7 +11,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import Iframe from "react-iframe";
 import GaugeChart from "react-gauge-chart";
@@ -107,7 +107,7 @@ const RobotControl = () => {
         sendInstruction("arrowright");
         updateValue((oldValue) => {
           let newValue = oldValue + 10;
-          if (newValue  >= 100) {
+          if (newValue >= 100) {
             newValue = 100;
           }
           return newValue;
@@ -267,6 +267,12 @@ const RobotControl = () => {
         </ModalFooter>
       </Modal>
       <PopOverContainer />
+      <Link to="/heatmap">
+        <Button className="float-right mr-2" outline color="info">
+          HeatMap du robot
+      </Button>
+      </Link>
+
       <ReturnButton />
       <Card>
         <CardHeader>
