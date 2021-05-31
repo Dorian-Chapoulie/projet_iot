@@ -16,7 +16,7 @@ export const NavBar = () => {
 
 	return (
 		<div className="NavBarJupiter">
-			<Navbar color="dark"  expand="md">
+			<Navbar color="dark" expand="md">
 				<NavbarBrand className="LogoTitle" href="/">Jupiter
 				<img
 						src={logo}
@@ -28,19 +28,19 @@ export const NavBar = () => {
 				</NavbarBrand>
 				<Nav className="m-auto" navbar>
 					<NavItem>
-						<NavLink href="/">Accueil</NavLink>
+						<NavLink className="mx-2" href="/">Accueil</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink className="mx-2" href="/control">Controles</NavLink>
+						<NavLink href="/heatmap">Heatmap</NavLink>
 					</NavItem>
 					<NavItem>
-						<NavLink className="mx-2" href="/heatmap">Heatmap</NavLink>
+						<NavLink href="/abstract">Le projet</NavLink>
 					</NavItem>
-					<NavItem> 
-						<NavLink href="https://github.com/Dorian-Chapoulie/projet_iot">GitHub du projet</NavLink>
+					<NavItem>
+						<NavLink className="mx-2" href="https://github.com/Dorian-Chapoulie/projet_iot">GitHub du projet</NavLink>
 					</NavItem>
 				</Nav>
-				<PopOverContainer/>
+				<PopOverContainer />
 			</Navbar>
 		</div>
 	);

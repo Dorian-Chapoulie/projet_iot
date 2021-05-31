@@ -11,7 +11,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import Iframe from "react-iframe";
 import GaugeChart from "react-gauge-chart";
@@ -19,10 +19,6 @@ import GaugeChart from "react-gauge-chart";
 import { initInputsEvent, offInitInputsEvent } from "../lib/Input";
 import { useSockets } from "../api/websockets";
 import RobotUploadFirmware from "../components/upload";
-
-import { ReturnButton } from "../components/returnButton";
-import PopOverContainer from "../components/popOver/popOverContainer";
-
 
 import "./RobotControl.css";
 const MAX_SPEED = 120;

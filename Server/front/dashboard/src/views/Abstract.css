@@ -1,0 +1,16 @@
+.wpJupiter{
+	background-image: url("../assets/wp.png");
+	height: 300px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.wpMiage{
+	margin-top: 1e;;;
+	background-image: url("../assets/wpMiage.jpg");
+	height: 100px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}

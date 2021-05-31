@@ -15,12 +15,13 @@ import { WSocketsProvider } from './api/websockets';
 import App from './App';
 import Control from './views/RobotControl';
 import HeatMap from './views/HeatMap';
-import {NavBar} from './components/navBar/NavBar';
+import { NavBar } from './components/navBar/NavBar';
+import { Abstract } from './views/Abstract';
 
 ReactDOM.render(
   <>
     <WSocketsProvider>
-      <NavBar/>
+      <NavBar />
       <Router>
         <Switch>
           <Route path="/control">
@@ -28,6 +29,9 @@ ReactDOM.render(
           </Route>
           <Route path="/heatmap">
             <HeatMap />
+          </Route>
+          <Route path="/abstract">
+            <Abstract />
           </Route>
           <Route path="/">
             <App />
