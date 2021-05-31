@@ -12,50 +12,74 @@ let points = [{
 }];
 let heatmapInstance = undefined;
 
-const mapData =  {
-  pingpong: {
+const mapData = {
+  pingPong: {
     x: 820, // x coordinate of the datapoint, a number
     y: 470, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
-  }, 
+    ssid: ""
+  },
   amphi1: {
     x: 680, // x coordinate of the datapoint, a number
     y: 300, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
   amphi2: {
     x: 715, // x coordinate of the datapoint, a number
     y: 350, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
   escaliers: {
     x: 650, // x coordinate of the datapoint, a number
     y: 250, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
-  parkingsup: {
+  parkingSup: {
     x: 550, // x coordinate of the datapoint, a number
     y: 100, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
-  parkinginf: {
-    x: 700, // x coordinate of the datapoint, a number
-    y: 590, // y coordinate of the datapoint, a number
+  miageEntree: {
+    x: 400, // x coordinate of the datapoint, a number
+    y: 610, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
-  salletd: {
-    x: 650, // x coordinate of the datapoint, a number
-    y: 410, // y coordinate of the datapoint, a number
+  parkingMillieu: {
+    x: 520, // x coordinate of the datapoint, a number
+    y: 450, // y coordinate of the datapoint, a number
     value: 10, // the value at datapoint(x, y)
-    ssid:""
+    ssid: ""
   },
-}
+  parkingInfFin: {
+    x: 750, // x coordinate of the datapoint, a number
+    y: 600, // y coordinate of the datapoint, a number
+    value: 10, // the value at datapoint(x, y)
+    ssid: ""
+  },
+  parkingInfDebut: {
+    x: 480, // x coordinate of the datapoint, a number
+    y: 520, // y coordinate of the datapoint, a number
+    value: 10, // the value at datapoint(x, y)
+    ssid: ""
+  },
+  escaliersAccueil: {
+    x: 480, // x coordinate of the datapoint, a number
+    y: 250, // y coordinate of the datapoint, a number
+    value: 10, // the value at datapoint(x, y)
+    ssid: ""
+  },
+  accueil: {
+    x: 550, // x coordinate of the datapoint, a number
+    y: 350, // y coordinate of the datapoint, a number
+    value: 10, // the value at datapoint(x, y)
+    ssid: ""
+  },
+};
 
 const getClosestAP = (dataList) => {
     let start = {
