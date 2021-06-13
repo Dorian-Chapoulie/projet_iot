@@ -155,11 +155,10 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
   librairies pour l'esp :
   
   * ArduinoJson librairie utilisée pour sérialisé ou désérialisé du Json : https://arduinojson.org/
-  * AsyncTCP : https://github.com/me-no-dev/AsyncTCP
-  * DallasTemperature : https://www.arduinolibraries.info/libraries/dallas-temperature
-  * ESP32Servo-0.9.0 : https://www.arduinolibraries.info/libraries/esp32-servo
-  * ESPAsyncWebServer : https://github.com/me-no-dev/ESPAsyncWebServer
-  * OneWire : https://www.arduinolibraries.info/libraries/one-wire
+  * AsyncTCP bibliothèque TCP entièrement asynchrone : https://github.com/me-no-dev/AsyncTCP
+  * ESP32Servo-0.9.0  permet aux cartes ESP32 de contrôler des servomoteurs, des moteurs à tonalité et des moteurs à écriture analogique : https://www.arduinolibraries.info/libraries/esp32-servo
+  * ESPAsyncWebServer Serveur asynchrone HTTP et WebSocket pour Arduino ESP : https://github.com/me-no-dev/ESPAsyncWebServer
+  * OneWire permet l'accès aux capteurs de température, à la mémoire et à d'autres puces: https://www.arduinolibraries.info/libraries/one-wire
   
   
   
