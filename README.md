@@ -138,7 +138,28 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
   PS: Il faut renseigner le SSID et le mot de passe dans Esp/Project et Esp-Cam/projet  
   PS: vous trouverez dans le dossier "libraries" les libs utilisés dans ArduinoIDE
 
-## 7. Sources 
+## 8. Sources 
   
-  Utilisation de heatmap.js pour la heatmap : https://www.npmjs.com/package/heatmap.js-fixed
+  * heatmap.js pour la heatmap : https://www.npmjs.com/package/heatmap.js-fixed
+  * react framework js :  https://www.npmjs.com/package/react
+  * axios librairie servent à simplifier les requêtes HTTP : https://www.npmjs.com/package/axios
+  * multer librairie pour déposer un fichier : https://www.npmjs.com/package/multer
+  * mqtt librairie permettant d'utiliser le protocole mqtt : https://www.npmjs.com/package/mqtt
+  * esp-ota librairie pour flash le firmware de l'esp à partir d'un fichier : https://www.npmjs.com/package/esp-ota
+  * mongodb MongoDB driver permettant de se connecter à une base de donnée MongoDB : https://www.npmjs.com/package/mongodb
+  * socket.io librairie qui permet une communication en temps réel, bidirectionnelle et basée sur des événements entre le navigateur et le serveur : https://www.npmjs.com/package/socket.io
+  
+  
+  ---------
+  
+  librairies pour l'esp :
+  
+  * ArduinoJson librairie utilisée pour sérialisé ou désérialisé du Json : https://arduinojson.org/
+  * AsyncTCP : https://github.com/me-no-dev/AsyncTCP
+  * DallasTemperature : https://www.arduinolibraries.info/libraries/dallas-temperature
+  * ESP32Servo-0.9.0 : https://www.arduinolibraries.info/libraries/esp32-servo
+  * ESPAsyncWebServer : https://github.com/me-no-dev/ESPAsyncWebServer
+  * OneWire : https://www.arduinolibraries.info/libraries/one-wire
+  
+  
   
