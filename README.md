@@ -104,14 +104,12 @@ Le robot va publier périodiquement les données du capteur de température et l
 
 L’API étant abonnée à ce topic, elle reçoit ces données, elle va les stocker en base, ce qui permet de générer des « heat-map » et un tracé du parcours du robot, par session.
 
-Notre interface web sera principalement composé de 2 modes :
+Notre interface web sera principalement composé en plusieurs parties :
 
 1. Le mode Contrôle
-2. Le mode Spectateur
-3. Le mode Historique
-
-De plus, elle sera aussi abonnée au topic des données. Cela permet de créer un affichage de la heat-map et de la position de n’importe quel robot en temps réel, même en étant simple spectateur.
-Le mode Historique permet de revoir les ancien tracés et heat-map.
+2. Affichage d'une heat-map
+ 
+De plus, elle sera aussi abonnée au topic des données.On pourra ainsi créer un affichage de la heat-map et de la position de n’importe quel robot en temps réel, même en étant un simple spectateur.
 
 ## 5. Données publiées
 
