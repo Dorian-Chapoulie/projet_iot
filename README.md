@@ -137,4 +137,8 @@ Nous avons créé un tableau (non définitif) des protocoles TCP utilisé pour c
   
   PS: Il faut renseigner le SSID et le mot de passe dans Esp/Project et Esp-Cam/projet  
   PS: vous trouverez dans le dossier "libraries" les libs utilisés dans ArduinoIDE
+
+## 7. Sources 
+  
+  Utilisation de heatmap.js pour la heatmap : https://www.npmjs.com/package/heatmap.js-fixed
   
